@@ -1,0 +1,116 @@
+<div class="container mt-5 shadow-sm p-4 bg-white rounded">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-secondary m-0">Gestión de Salas</h2>
+    <div class="d-flex gap-2">
+      <div class="input-group">
+        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+        <input type="text" class="form-control border-start-0" placeholder="Buscar película..." #busq (keyup)="search(busq)">
+      </div>
+      <button class="btn btn-primary d-flex align-items-center gap-2" (click)="openModal()">
+        <i class="bi bi-plus-circle"></i> Nuevo
+      </button>
+
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle border-top">
+      <thead class="table-light">
+        <tr>
+          <th scope="col" class="py-3 text-muted">NOMBRE</th>
+          <th scope="col" class="py-3 text-muted">ESTADO</th>
+          <th scope="col" class="py-3 text-muted">ACTIVE</th>
+          <th scope="col" class="py-3 text-muted">ESTADO REAL</th>
+
+          <th scope="col" class="py-3 text-muted text-end">ACCIONES</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (sala of sala() ; track $index) {
+          <tr>
+            <td class="fw-semibold text-dark">{{sala.nombre}}</td>
+            <td>
+              <span class="badge rounded-pill bg-light text-dark border">
+                <i class="bi bi-clock me-1"></i> {{sala.estado}}
+              </span>
+            </td>
+            <td>
+              @if (sala.active) {
+                <span class="badge bg-success-subtle text-success border border-success-subtle px-3">Activa</span>
+              } @else {
+                <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3">Inactiva</span>
+              }
+            </td>
+
+
+
+
+
+  <td>
+    <span class="badge"
+      [ngClass]="{
+        'bg-success': sala.estadoReal === 'Sala disponible',
+        'bg-warning text-dark': sala.estadoReal?.includes('películas asignadas'),
+        'bg-danger': sala.estadoReal === 'Sala no disponible'
+      }">
+      {{ sala.estadoReal || 'Consultando...' }}
+    </span>
+  </td>
+
+            <td class="text-end">
+              <button (click)="editModal(sala)" class="btn btn-sm btn-outline-primary me-2" title="Editar">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button (click)="desactivateSala(sala)" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <!--Modal-->
+  </div>
+</div> <div class="modal fade" id="peliModal" tabindex="-1" #SalaModalRef>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{editingId? 'Editar Sala':'Nueva Sala'}}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form [formGroup]="formSala">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre"/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Estado</label>
+            <input type="text" class="form-control" formControlName="estado">
+          </div>
+
+
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              formControlName="active"
+              id="checkActive"/>
+            <label class="form-check-label" for="checkActive">Active</label>
+          </div>
+        </div>
+
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" (click)="modalRef.hide()">Cancelar</button>
+          <button (click)="save()" class="btn btn-primary" type="button">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

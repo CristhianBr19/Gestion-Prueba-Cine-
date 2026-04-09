@@ -1,0 +1,92 @@
+<div class="container mt-4">
+  <h2 class="mb-4 fw-bold text-dark">Panel de Control</h2>
+
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="card border-0 border-start border-primary border-5 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted text-uppercase fw-semibold mb-1">Total Películas</h6>
+              <h2 class="display-5 fw-bold mb-0">{{totalpeliculas}}</h2>
+              <small class="text-success fw-bold"><i class="bi bi-arrow-up"></i> +2 esta semana</small>
+            </div>
+            <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
+              <i class="bi bi-film text-primary fs-3"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card border-0 border-start border-success border-5 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted text-uppercase fw-semibold mb-1">Salas Registradas</h6>
+              <h2 class="display-5 fw-bold mb-0">{{totalsalas}}</h2>
+              <small class="text-muted">Capacidad máxima operativa</small>
+            </div>
+            <div class="bg-success bg-opacity-10 p-3 rounded-circle">
+              <i class="bi bi-door-open text-success fs-3"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card border-0 border-start border-info border-5 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted text-uppercase fw-semibold mb-1">Disponibles Ahora</h6>
+              <h2 class="display-5 fw-bold mb-0">{{totalsalasdisponibles}}</h2>
+              <div class="progress mt-2" style="height: 6px; width: 100px;">
+                <div class="progress-bar bg-info" role="progressbar" [style.width.%]="(totalsalasdisponibles/totalsalas)*100"></div>
+              </div>
+            </div>
+            <div class="bg-info bg-opacity-10 p-3 rounded-circle">
+              <i class="bi bi-check-circle text-info fs-3"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Dashboard sencillo
+<div class="container mt-4">
+  <h2 class="mb-4">Indicadores del Sistema</h2>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card text-white bg-primary mb-3 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Películas</h5>
+          <p class="card-text display-4">{{ totalPeliculas }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card text-white bg-success mb-3 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Total Salas</h5>
+          <p class="card-text display-4">{{ totalSalas }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card text-white bg-info mb-3 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Salas Disponibles</h5>
+          <p class="card-text display-4">{{ salasDisponibles }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
