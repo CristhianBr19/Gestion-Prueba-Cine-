@@ -20,8 +20,10 @@
         <tr>
           <th scope="col" class="py-3 text-muted">NOMBRE</th>
           <th scope="col" class="py-3 text-muted">ESTADO</th>
+
           <th scope="col" class="py-3 text-muted">ACTIVE</th>
-          <th scope="col" class="py-3 text-muted">ESTADO REAL</th>
+
+          <th scope="col" class="py-3 text-muted">ESTADO DE DISPONIBILIDAD</th>
 
           <th scope="col" class="py-3 text-muted text-end">ACCIONES</th>
         </tr>
@@ -30,11 +32,8 @@
         @for (sala of sala() ; track $index) {
           <tr>
             <td class="fw-semibold text-dark">{{sala.nombre}}</td>
-            <td>
-              <span class="badge rounded-pill bg-light text-dark border">
-                <i class="bi bi-clock me-1"></i> {{sala.estado}}
-              </span>
-            </td>
+             <td class="fw-semibold text-dark">{{sala.estado}}</td>
+
             <td>
               @if (sala.active) {
                 <span class="badge bg-success-subtle text-success border border-success-subtle px-3">Activa</span>
@@ -88,11 +87,38 @@
           <div class="mb-3">
             <label class="form-label">Nombre</label>
             <input type="text" class="form-control" formControlName="nombre"/>
+            <span class="error">
+              @if(nombre?.invalid &&(nombre?.dirty || nombre?.touched)){
+                @if(nombre?.errors?.['required']){
+                  Nombre requerido
+                }
+              }
+            </span>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Estado</label>
-            <input type="text" class="form-control" formControlName="estado">
-          </div>
+
+
+
+         <div class="mb-3">
+         <label class="form-label">Estado</label>
+
+          <select class="form-select" formControlName="estado">
+          <option value="" disabled selected>Seleccione un estado</option>
+
+            @for(e of estado; track e.value) {
+            <option [value]="e.value">{{e.label}}</option>
+       }
+
+       </select>
+        <span class="error">
+              @if(estados?.invalid &&(estados?.dirty || estados?.touched)){
+                @if(estados?.errors?.['required']){
+                  Estado requerido
+                }
+              }
+            </span>
+
+
+    </div>
 
 
           <div class="form-check mb-3">

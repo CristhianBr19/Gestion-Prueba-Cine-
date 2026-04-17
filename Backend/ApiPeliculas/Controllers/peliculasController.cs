@@ -43,7 +43,7 @@ namespace ApiPeliculas.Controllers
         [HttpPost]
         public async Task<ActionResult<pelicula>> PostPelicula([FromBody] pelicula peli)
         {
-            if (peli?.fecha_publicacion == null) return BadRequest("Fecha es requerida"); // Validar fecha [cite: 31]
+            if (peli?.fecha_publicacion == null) return BadRequest("Fecha es requerida"); 
             await _service.Crear(peli);
             return CreatedAtAction(nameof(GetPeliculaId), new { id = peli.id }, peli);
         }
@@ -69,21 +69,21 @@ namespace ApiPeliculas.Controllers
         public async Task<ActionResult<IEnumerable<pelicula>>> GetSearch(string? search)
         {
             var res = await _service.BuscarNombre(search ?? "");
-            return !res.Any() ? NotFound("No se encontró la película") : Ok(res); // Buscar por nombre [cite: 29]
+            return !res.Any() ? NotFound("No se encontró la película") : Ok(res); 
         }
 
         [HttpGet("searchFecha/{fecha}")]
         public async Task<ActionResult<IEnumerable<pelicula>>> GetPeliculaByFecha(DateTime fecha)
         {
             var res = await _service.BuscarFecha(fecha);
-            return !res.Any() ? NotFound("No hay películas con esta fecha") : Ok(res); // Presentar por fecha [cite: 30]
+            return !res.Any() ? NotFound("No hay películas con esta fecha") : Ok(res); 
         }
 
         [HttpPut("desactivate/{id}")]
         public async Task<IActionResult> DesactivatePelicula(int id)
         {
             if (await _service.ObtenerPorId(id) == null) return NotFound();
-            await _service.Desactivar(id); // Eliminación lógica [cite: 38]
+            await _service.Desactivar(id); 
             return NoContent();
         }
     }

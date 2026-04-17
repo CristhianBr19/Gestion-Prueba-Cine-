@@ -114,25 +114,21 @@ namespace ApiPeliculas.Controllers
                     await conexion.OpenAsync();
                 }
 
-                // creamos el comando el mesnajero (la hoja en blanco) 
+                
                 using (var comando = conexion.CreateCommand())
                 {
-                    //configuramos el parametro de forma segura(para comunicarnos con la base 
+               
                     var parametro = new NpgsqlParameter("@p0", nombre_sala);
-                    //metemos el parametro en una caja fuerte, asi la bd sabe q hacer 
+                  
                     comando.Parameters.Add(parametro);
-                    //definir la consulta que va resivir la base
                     comando.CommandText = "SELECT public.fn_consultar_disponibilidad_sala(@p0)";
 
-                    //le decimos que solo nos traiga la primera celda q te den 
+                    
                     var resultado = await comando.ExecuteScalarAsync();
                     return Ok(resultado?.ToString() ?? "sin datos");
 
                 }
-                //var parametro = new NpgsqlParameter("@p0", nombre_sala);
-                //var consulta = _context.Database("SELECT public.fn_consultar_disponibilidad_sala(@p0) ", parametro);
-                //var resultado = await consulta.ex;
-                // return Ok(resultado);
+             
             }
             finally
             {

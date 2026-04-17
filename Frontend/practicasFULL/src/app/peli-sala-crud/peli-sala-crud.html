@@ -86,6 +86,13 @@
                 <option [value]="peli.id">{{ peli.nombre }}</option>
               }
             </select>
+                <span class="error">
+         @if(id_pelicula?.invalid &&(id_pelicula?.dirty || id_pelicula?.touched)){
+                @if(id_pelicula?.errors?.['required']){
+                  Pelicula requerida
+                }
+              }
+       </span>
           </div>
 
             <div class="mb-3">
@@ -96,6 +103,13 @@
                 <option [value]="sala.id">{{ sala.nombre }}</option>
               }
             </select>
+            <span class="error">
+         @if(id_sala?.invalid &&(id_sala?.dirty || id_sala?.touched)){
+                @if(id_sala?.errors?.['required']){
+                  Sala requerida
+                }
+              }
+       </span>
 
           </div>
 
@@ -106,6 +120,13 @@
             [min]="minDate"
             [max]="maxDate"
             class="form-control">
+             <span class="error">
+         @if(fecha_publicacion?.invalid &&(fecha_publicacion?.dirty || fecha_publicacion?.touched)){
+                @if(fecha_publicacion?.errors?.['required']){
+                  Fecha publicacion requerida
+                }
+              }
+       </span>
            </div>
 
             <div class="mb-3">
@@ -115,6 +136,13 @@
             [min]="minDate"
             [max]="maxDate"
             class="form-control">
+             <span class="error">
+         @if(fecha_fin?.invalid &&(fecha_fin?.dirty || fecha_fin?.touched)){
+                @if(fecha_fin?.errors?.['required']){
+                  Fecha fin requerida
+                }
+              }
+       </span>
            </div>
 
             <div class="form-check mb-3">

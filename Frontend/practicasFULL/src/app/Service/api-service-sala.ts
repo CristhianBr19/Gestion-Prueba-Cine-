@@ -9,6 +9,12 @@ import { Observable } from 'rxjs';
 export class ApiServiceSala {
 
    readonly ApiUrlSalas= 'http://localhost:5218/api/sala_cine';
+   estado=[
+    { label: 'Operativa', value: 'Operativa' },
+  { label: 'En Mantenimiento', value: 'Mantenimiento' },
+  { label: 'Fuera de Servicio', value: 'Cerrada' }
+   ]
+
    constructor(private http:HttpClient){
 
    }

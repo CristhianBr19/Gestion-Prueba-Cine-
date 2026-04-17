@@ -21,6 +21,19 @@ export class PeliSalaCrud {
   salas=signal<Sala[]>([]);
 
   formPeliSala!:FormGroup;
+  get id_pelicula(){
+    return this.formPeliSala.get('id_pelicula')
+  }
+  get id_sala(){
+    return this.formPeliSala.get('id_sala');
+  }
+  get fecha_publicacion(){
+    return this.formPeliSala.get('fecha_publicacion');
+  }
+   get fecha_fin(){
+    return this.formPeliSala.get('fecha_fin');
+  }
+
   editingId:number|null=null;
   minDate='1942-02-12';
   maxDate= new Date().toISOString().split('T')[0];

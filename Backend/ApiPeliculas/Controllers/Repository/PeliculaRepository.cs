@@ -1,6 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-using PracFullStack.Contexts; // Asegúrate que este sea tu namespace del contexto
+using PracFullStack.Contexts; 
 using PracFullStack.Models;
 
 namespace ApiPeliculas.Repository

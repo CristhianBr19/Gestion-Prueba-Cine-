@@ -17,11 +17,18 @@ export class SalasCrud {
   sala = signal<Sala[]>([]);
 
   formSala!:FormGroup;
+  get nombre(){
+    return this.formSala.get('nombre')
+  }
+  get estados(){
+    return this.formSala.get('estado')
+  }
 
   editingId:number|null = null;
   minDate='1942-06-21';
   maxDate= new Date().toISOString().split("T")[0];
   modalRef:any;
+  estado:any []=[]
 
   constructor(private miservicio:ApiServiceSala, private fb:FormBuilder){
     this.formSala = this.fb.group({
@@ -42,6 +49,7 @@ export class SalasCrud {
   ngOnInit(){
     this.loadSalas();
     this.cargarSalas();
+    this.estado = this.miservicio.estado;
   }
 
   loadSalas(){
@@ -59,7 +67,7 @@ export class SalasCrud {
     const params = busq.value.toLocaleLowerCase();
 
     this.miservicio.searchSala(params).subscribe({
-      next:(data)=>{
+      next:(data:Sala[])=>{
         this.sala.set(data);
       }
     })

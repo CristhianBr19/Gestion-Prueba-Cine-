@@ -1,13 +1,13 @@
 import { Component, ElementRef, signal, ViewChild } from '@angular/core';
 import { Peliculas } from '../../Models/interfaceMovie';
 import { ApiService } from '../../Service/api-service';
-import { DatePipe, NgIf } from '@angular/common';
+import { CommonModule, DatePipe,  } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 declare const bootstrap:any;
 @Component({
   selector: 'app-peliculas-crud',
-  imports: [ReactiveFormsModule,NgIf, FormsModule, DatePipe],
+  imports: [ReactiveFormsModule,CommonModule, FormsModule, DatePipe],
   templateUrl: './peliculas-crud.html',
   styleUrl: './peliculas-crud.css',
 })
@@ -17,6 +17,15 @@ export class PeliculasCrud {
   fechaFiltro:string="";
 
   formPeliculas!: FormGroup;
+  get nombre(){
+    return this.formPeliculas.get('nombre');
+  }
+  get duracion(){
+    return this.formPeliculas.get('duracion');
+  }
+  get fecha_publicacion(){
+    return this.formPeliculas.get('fecha_publicacion');
+  }
 
   editinId:number|null = null;
   minDate='1942-01-01';
@@ -25,10 +34,10 @@ export class PeliculasCrud {
 
   constructor(private miservicio:ApiService, private fb:FormBuilder){
      this.formPeliculas = this.fb.group({
-      nombre:['',[Validators.required]],
+      nombre:['',[Validators.required, Validators.minLength(3)]],
       duracion:['',[Validators.required]],
       active:[true],
-      fecha_publicacion:['']
+      fecha_publicacion:['',[Validators.required]]
      })
   }
 

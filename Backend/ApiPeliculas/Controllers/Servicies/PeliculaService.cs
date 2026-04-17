@@ -28,7 +28,7 @@ namespace ApiPeliculas.Controllers.Servicies
             var peli = await _repo.GetByIdAsync(id);
             if (peli != null)
             {
-                peli.active = false; // Eliminación lógica [cite: 38]
+                peli.active = false; 
                 await _repo.UpdateAsync(peli);
             }
         }
