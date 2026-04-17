@@ -1,0 +1,440 @@
+{
+  "info": {
+    "_postman_id": "d486fa9a-fedb-439d-9612-b7b8d71c4121",
+    "name": "Cine_Api_Prueba",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51487716",
+    "_collection_link": "https://go.postman.co/collection/51487716-d486fa9a-fedb-439d-9612-b7b8d71c4121?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Peliculas",
+      "item": [
+        {
+          "name": "Listar Película",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Película (nombe)",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Película (fecha)",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 0,\r\n  \"nombre\": \"string\",\r\n  \"duracion\": 600,\r\n  \"active\": true,\r\n  \"fecha_publicacion\": \"2026-04-08T18:48:26.554Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5218/api/peliculas/searchFecha/2026-04-01",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "peliculas",
+                "searchFecha",
+                "2026-04-01"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Película",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\r\n  \"nombre\": \"string\",\r\n  \"duracion\": 1,\r\n  \"active\": true,\r\n  \"fecha_publicacion\": \"2026-04-08T18:48:26.554Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5218/api/peliculas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "peliculas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Película",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 0,\r\n  \"nombre\": \"string\",\r\n  \"duracion\": 600,\r\n  \"active\": true,\r\n  \"fecha_publicacion\": \"2026-04-08T18:56:41.896Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5218/api/peliculas/11",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "peliculas",
+                "11"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar (Lógico)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5218/api/peliculas/desactivate/10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "peliculas",
+                "desactivate",
+                "10"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar (Físico)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5218/api/peliculas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "peliculas"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Salas",
+      "item": [
+        {
+          "name": "Listar Sala",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Estado",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Sala (nombre)",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Sala",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \r\n  \"nombre\": \"string\",\r\n  \"estado\": \"string\",\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5218/api/sala_cine",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "sala_cine"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Sala",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 0,\r\n  \"nombre\": \"string\",\r\n  \"estado\": \"string\",\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5218/api/sala_cine/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "sala_cine",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar (Lógico)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5218/api/sala_cine/desactivate/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "sala_cine",
+                "desactivate",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar (Físico)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5218/api/sala_cine/3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "sala_cine",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Asignación",
+      "item": [
+        {
+          "name": "Listar Asignación",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Asignación (nombre película)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5218/api/pelicula_salacine/search?search=car",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "pelicula_salacine",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "car"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear Asignación",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \r\n  \"id_pelicula\": 0,\r\n  \"id_sala\": 0,\r\n  \"fecha_publicacion\": \"2026-04-08\",\r\n  \"fecha_fin\": \"2026-04-08\",\r\n  \"active\": true,\r\n  \"id_peliculaNavigation\": {\r\n    \"id\": 0,\r\n    \"nombre\": \"string\",\r\n    \"duracion\": 600,\r\n    \"active\": true,\r\n    \"fecha_publicacion\": \"2026-04-08T22:59:36.931Z\"\r\n  },\r\n  \"id_salaNavigation\": {\r\n    \"id\": 0,\r\n    \"nombre\": \"string\",\r\n    \"estado\": \"string\",\r\n    \"active\": true\r\n  }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5218/api/pelicula_salacine",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "pelicula_salacine"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Asignación",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 0,\r\n  \"id_pelicula\": 0,\r\n  \"id_sala\": 0,\r\n  \"fecha_publicacion\": \"2026-04-08\",\r\n  \"fecha_fin\": \"2026-04-08\",\r\n  \"active\": true\r\n \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5218/api/pelicula_salacine/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "pelicula_salacine",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar (Lógico)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5218/api/pelicula_salacine/desactivate/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "pelicula_salacine",
+                "desactivate",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar (Físico)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5218/api/pelicula_salacine/4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5218",
+              "path": [
+                "api",
+                "pelicula_salacine",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
