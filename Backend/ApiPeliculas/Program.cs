@@ -1,3 +1,5 @@
+using ApiPeliculas.Controllers.Servicies;
+using ApiPeliculas.Repository;
 using Microsoft.EntityFrameworkCore;
 using PracFullStack.Contexts;
 
@@ -27,9 +29,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAngularApp", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
+builder.Services.AddScoped<PeliculaRepository>();
+builder.Services.AddScoped<PeliculaService>();
 
 
-    var app = builder.Build();
+var app = builder.Build();
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())

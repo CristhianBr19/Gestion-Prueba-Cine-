@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ApiPeliculas.Controllers.Servicies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PracFullStack.Contexts;
 using PracFullStack.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ApiPeliculas.Controllers
 {
@@ -15,163 +16,75 @@ namespace ApiPeliculas.Controllers
     public class peliculasController : ControllerBase
     {
         private readonly MoviesContext _context;
+        private readonly PeliculaService _service;
 
-        public peliculasController(MoviesContext context)
+        public peliculasController(MoviesContext context, PeliculaService service)
         {
             _context = context;
+            _service = service;
         }
 
         // GET: api/peliculas
         [HttpGet]
         public async Task<ActionResult<IEnumerable<pelicula>>> GetPeliculas()
         {
-            return await _context.peliculas.OrderBy(p=>p.id).ToListAsync();
+            var peliculas = await _service.ObtenerTodo();
+            return Ok(peliculas);
         }
 
         // GET: api/peliculas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<pelicula>>GetPeliculaId(int id)
+        public async Task<ActionResult<pelicula>> GetPeliculaId(int id)
         {
-            var ids =  await _context.peliculas.FirstOrDefaultAsync(p => p.id == id);
-            if(ids == null)
-            {
-                return NotFound();
-            }
-            return Ok(ids);
+            var peli = await _service.ObtenerPorId(id);
+            return peli == null ? NotFound() : Ok(peli);
         }
 
-        // PUT: api/peliculas/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task <IActionResult>PostPelicul(int id, pelicula peli)
-        {
-            if(id != peli.id)
-            {
-                return BadRequest();
-
-            }
-            _context.Entry(peli).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!peliculaExists(id))
-                {
-                    return NotFound("Pelicula no encontrada");
-                }
-                else
-                {
-                    throw;
-                }    
-
-               
-            }
-            return NoContent();
-
-        }
-
-
-        // POST: api/peliculas
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<pelicula>> PostPelicula([FromBody] pelicula peli)
         {
-            if(peli == null)
-            {
-                return BadRequest();
-               
-            }else if(peli.fecha_publicacion == null)
-            {
-                return BadRequest("Fecha es requerido");
-            }
-            await _context.peliculas.AddAsync(peli);
-            await _context.SaveChangesAsync();
+            if (peli?.fecha_publicacion == null) return BadRequest("Fecha es requerida"); // Validar fecha [cite: 31]
+            await _service.Crear(peli);
             return CreatedAtAction(nameof(GetPeliculaId), new { id = peli.id }, peli);
         }
 
-        // DELETE: api/peliculas/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult>DeletePelicula(int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutPelicula(int id, pelicula peli)
         {
-            var peli = await _context.peliculas.FindAsync(id);
-            if (peli == null)
-            {
-                return NotFound(); 
+            if (id != peli.id) return BadRequest();
+            try { await _service.Actualizar(peli); }
+            catch (DbUpdateConcurrencyException) { if (!_service.Existe(id)) return NotFound(); throw; }
+            return NoContent();
+        }
 
-            }
-
-            _context.peliculas.Remove(peli);
-            await _context.SaveChangesAsync();
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePelicula(int id)
+        {
+            if (await _service.ObtenerPorId(id) == null) return NotFound();
+            await _service.EliminarFisico(id);
             return NoContent();
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<pelicula>> GetSearch(string? search)
-
+        public async Task<ActionResult<IEnumerable<pelicula>>> GetSearch(string? search)
         {
-            var peliculanom = _context.peliculas.AsQueryable();
-
-            if (!string.IsNullOrEmpty(search))
-            {
-                peliculanom = peliculanom.Where(p => p.nombre.ToLower().Contains(search));
-            }
-
-            var resultadoq = await peliculanom.ToListAsync();
-
-            if (!resultadoq.Any())
-            {
-                return NotFound("No se encontro la pelicula");
-
-
-            }
-            return Ok(resultadoq);
+            var res = await _service.BuscarNombre(search ?? "");
+            return !res.Any() ? NotFound("No se encontró la película") : Ok(res); // Buscar por nombre [cite: 29]
         }
 
         [HttpGet("searchFecha/{fecha}")]
-
-        public async Task<ActionResult<pelicula>>GetPeliculaByFecha(DateTime fecha)
+        public async Task<ActionResult<IEnumerable<pelicula>>> GetPeliculaByFecha(DateTime fecha)
         {
-            var peliculas = await _context.peliculas.Where(p => p.fecha_publicacion.Value.Date == fecha.Date).ToListAsync();
-            if(peliculas == null || !peliculas.Any())
-            {
-                return NotFound("No hay peliculas con esta fecha");
-
-            }
-            return Ok( peliculas);
+            var res = await _service.BuscarFecha(fecha);
+            return !res.Any() ? NotFound("No hay películas con esta fecha") : Ok(res); // Presentar por fecha [cite: 30]
         }
 
         [HttpPut("desactivate/{id}")]
-
-        public async Task<IActionResult>DesactivatePelicula(int id)
+        public async Task<IActionResult> DesactivatePelicula(int id)
         {
-            var peliculaDesac = await _context.peliculas.FindAsync(id);
-            if(peliculaDesac == null)
-            {
-                return NotFound("Pelicula no encontrada ");
-            }
-
-            peliculaDesac.active = false;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return StatusCode(505, "Error al actualizar la pelicula "); 
-            }
-
+            if (await _service.ObtenerPorId(id) == null) return NotFound();
+            await _service.Desactivar(id); // Eliminación lógica [cite: 38]
             return NoContent();
-        }
-
-                                                                                    
-
-
-        private bool peliculaExists(int id)
-        {
-            return _context.peliculas.Any(e => e.id == id);
         }
     }
 }

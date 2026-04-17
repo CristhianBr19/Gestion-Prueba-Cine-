@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 
 namespace PracFullStack.Models;
@@ -18,6 +19,9 @@ public partial class sala_cine
     public string estado { get; set; } = null!;
 
     public bool? active { get; set; }
+
+    [NotMapped]
+    public string? estadoReal { get; set; }
 
 
     [JsonIgnore]

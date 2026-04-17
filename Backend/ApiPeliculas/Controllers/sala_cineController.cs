@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using PracFullStack.Contexts;
 using PracFullStack.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ApiPeliculas.Controllers
 {
@@ -166,6 +167,17 @@ namespace ApiPeliculas.Controllers
             {
                 return NotFound("No se encontro la sala");
             }
+
+            foreach(var sal in resultado)
+            {
+                
+                var disponibilidad = await _context.Database
+                    .SqlQueryRaw<string>("SELECT public.fn_consultar_disponibilidad_sala({0})", sal.nombre)
+                    .ToListAsync();
+
+                sal.estadoReal = disponibilidad.FirstOrDefault();
+            
+        }
 
             return Ok(resultado);
 
